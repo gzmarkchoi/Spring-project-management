@@ -3,6 +3,7 @@ package com.mci.pma.entities;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Employee {
@@ -18,15 +24,23 @@ public class Employee {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq")
 	private long employeeId;
 
+	@NotNull
+	@Size(min = 2, max = 50)
 	private String firstName;
+
+	@NotNull
+	@Size(min = 1, max = 50)
 	private String lastName;
+
+	@NotNull
+	@Email
+	@Column(unique = true)
 	private String email;
 
-	@ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST }, 
-				fetch = FetchType.LAZY)
-	@JoinTable(name = "project_employee", 
-				joinColumns = @JoinColumn(name = "employee_id"), 
-				inverseJoinColumns = @JoinColumn(name = "project_id"))
+	@ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,
+			CascadeType.PERSIST }, fetch = FetchType.LAZY)
+	@JoinTable(name = "project_employee", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
+	@JsonIgnore
 	private List<Project> projects;
 
 	public Employee() {

@@ -39,6 +39,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/", "/**").permitAll()
 			.and()
 			.formLogin();
+		// otherwise the POST, PUT would not work for the REST API
+		http.csrf().disable();
 
 	}
 

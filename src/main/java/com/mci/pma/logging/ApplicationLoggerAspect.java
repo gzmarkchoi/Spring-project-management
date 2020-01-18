@@ -28,10 +28,10 @@ public class ApplicationLoggerAspect {
 				jp.getSignature().getDeclaringTypeName(), jp.getSignature().getName(), Arrays.toString(jp.getArgs()));
 		log.debug("____________________________________________________ \n \n \n");
 
-		Object o = null;
+		Object object = null;
 
 		try {
-			o = jp.proceed();
+			object = jp.proceed();
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,6 +42,6 @@ public class ApplicationLoggerAspect {
 				jp.getSignature().getDeclaringTypeName(), jp.getSignature().getName(), Arrays.toString(jp.getArgs()));
 		log.debug("____________________________________________________ \n \n \n");
 
-		return o;
+		return object;
 	}
 }
